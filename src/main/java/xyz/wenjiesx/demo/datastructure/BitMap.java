@@ -45,10 +45,10 @@ public class BitMap {
     public List<Integer> list() {
 
         List<Integer> sortNums = new ArrayList<>();
-
+        int tmp;
         for (int i = 0; i < bits.length; i++) {
             byte bit = bits[i];
-            int tmp = 1;
+            tmp = 1;
             for (int j = 0; j < 8; j++) {
                 if ((bit & tmp) != 0) {
                     sortNums.add(i * 8 + j);
