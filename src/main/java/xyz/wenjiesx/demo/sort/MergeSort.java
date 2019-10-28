@@ -125,6 +125,9 @@ public class MergeSort {
         List<Integer> result = mergeSort(a, b);
         System.out.println(result);
 
+        System.out.println(mergeSort(Arrays.stream(a).boxed().collect(Collectors.toList()),
+                Arrays.stream(b).boxed().collect(Collectors.toList())));
+
         List<Integer> listA = new ArrayList<>(Arrays.asList(1, 3, 6, 10,23,32));
         List<Integer> listB = new ArrayList<>(Arrays.asList(2, 60, 67, 89));
         List<Integer> listC = new ArrayList<>(Arrays.asList(5, 12, 45, 90, 211, 235, 236));
