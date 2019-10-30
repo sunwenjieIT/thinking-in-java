@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 public class CglibProxy implements MethodInterceptor {
     private Object target; // 需要代理的目标对象
 
+    @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         System.out.println("cglib proxy start.");
 
