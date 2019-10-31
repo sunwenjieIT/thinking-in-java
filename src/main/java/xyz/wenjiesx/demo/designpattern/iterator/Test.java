@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 迭代器模式的示例
  * @author wenji
  * @date 2019/10/31
  */
