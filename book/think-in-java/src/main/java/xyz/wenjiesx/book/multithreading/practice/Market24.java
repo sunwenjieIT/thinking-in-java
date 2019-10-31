@@ -11,8 +11,13 @@ package xyz.wenjiesx.book.multithreading.practice;
  * @author wenji
  * @date 2019/10/21
  */
-import java.util.*;
-import java.util.concurrent.*;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util.println;
 

@@ -1,7 +1,6 @@
 package xyz.wenjiesx.book.multithreading.practice;
 
 import java.io.IOException;
-import java.io.PipedReader;
 import java.io.PipedWriter;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

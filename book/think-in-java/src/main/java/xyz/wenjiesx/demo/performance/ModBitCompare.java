@@ -1,7 +1,5 @@
 package xyz.wenjiesx.demo.performance;
 
-import java.util.Random;
-
 /**
  * %取模和位运算取模性能测试
  *

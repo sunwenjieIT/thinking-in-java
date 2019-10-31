@@ -4,7 +4,10 @@ package xyz.wenjiesx.book.multithreading.practice;
  * @author wenji
  * @date 2019/10/21
  */
-import java.util.concurrent.*;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 class A implements Runnable {

@@ -1,7 +1,5 @@
 package xyz.wenjiesx.book.multithreading.practice;
 
-import sun.awt.image.ImageWatched;
-
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
