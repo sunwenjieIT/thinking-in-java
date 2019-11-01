@@ -3,20 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>parent</artifactId>
-        <groupId>xyz.wenjiesx</groupId>
+        <artifactId>hello-dubbo</artifactId>
+        <groupId>xyz.wenjiesx.framework</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>xyz.wenjiesx</groupId>
-    <artifactId>framework</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>my-spring-boot-starter</module>
-        <module>my-spring-boot-starter-verify</module>
-        <module>hello-dubbo</module>
-    </modules>
+    <artifactId>dubbo-demo-api</artifactId>
 
 
 </project>

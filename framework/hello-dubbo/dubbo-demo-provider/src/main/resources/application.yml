@@ -1,0 +1,11 @@
+dubbo:
+  application:
+    name: demo-provider
+
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: N/A
+  scan:
+    base-packages: xyz.wenjiesx.framework.dubbo.demo.provider
