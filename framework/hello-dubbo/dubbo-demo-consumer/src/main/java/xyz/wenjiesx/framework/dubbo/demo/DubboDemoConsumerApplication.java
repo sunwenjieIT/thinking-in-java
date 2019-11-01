@@ -13,7 +13,10 @@ import org.springframework.context.annotation.Bean;
 @EnableAutoConfiguration
 public class DubboDemoConsumerApplication {
 
-    @Reference(url = "dubbo://127.0.0.1:20880")
+
+//    @Reference(url = "dubbo://127.0.0.1:20880") //当使用N/A方式注册发现服务时(无注册中心,直连), 使用该写法来发现服务
+
+    @Reference
     private DemoService demoService;
 
     public static void main(String[] args) {
@@ -22,10 +25,7 @@ public class DubboDemoConsumerApplication {
 
     @Bean
     public ApplicationRunner runner() {
-        return args -> {
-            System.out.println(demoService.sayHello("message from consumer"));
-
-        };
+        return args -> System.out.println(demoService.sayHello("message from consumer"));
     }
 
 }

@@ -1,11 +1,25 @@
 dubbo:
   application:
     name: demo-provider
-
   protocol:
     name: dubbo
     port: 20880
-  registry:
-    address: N/A
   scan:
     base-packages: xyz.wenjiesx.framework.dubbo.demo.provider
+
+---
+dubbo:
+  registry:
+    address: N/A
+spring:
+  profiles: default
+#  scan:
+#    base-packages: xyz.wenjiesx.framework.dubbo.demo.provider
+
+---
+spring:
+  profiles: zookeeper
+
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181

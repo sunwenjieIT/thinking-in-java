@@ -1,3 +1,11 @@
 spring:
   application:
     name: demo-consumer
+
+---
+spring:
+  profiles: zookeeper
+
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181
