@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 归并排序算法demo
  * @author wenji
  * @date 2019/10/28
  */
