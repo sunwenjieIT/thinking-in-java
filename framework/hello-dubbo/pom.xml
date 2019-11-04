@@ -8,6 +8,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 -->
+
+    <properties>
+        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <dubbo.version>2.7.3</dubbo.version>
+    </properties>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -27,6 +33,8 @@
         <module>dubbo-demo-provider</module>
         <module>dubbo-demo-consumer</module>
     </modules>
+
+
 
     <dependencies>
         <!-- apache dubbo -->
@@ -62,6 +70,12 @@
             <version>4.0.0</version>
         </dependency>
 
+        <!-- dubbo redis metadata center -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-metadata-report-redis</artifactId>
+            <version>${dubbo.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

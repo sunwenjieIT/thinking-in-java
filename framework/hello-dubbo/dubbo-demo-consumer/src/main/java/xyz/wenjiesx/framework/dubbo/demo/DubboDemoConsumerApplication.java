@@ -1,16 +1,17 @@
 package xyz.wenjiesx.framework.dubbo.demo;
 
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wenji
  * @date 2019/11/1
  */
-@EnableAutoConfiguration
+@RestController
+@SpringBootApplication
 public class DubboDemoConsumerApplication {
 
 
@@ -20,12 +21,18 @@ public class DubboDemoConsumerApplication {
     private DemoService demoService;
 
     public static void main(String[] args) {
-        SpringApplication.run(DubboDemoConsumerApplication.class, args).close();
+        SpringApplication.run(DubboDemoConsumerApplication.class, args);
     }
 
-    @Bean
-    public ApplicationRunner runner() {
-        return args -> System.out.println(demoService.sayHello("message from consumer"));
+    @GetMapping("demo")
+    public String demo() {
+        String hello = demoService.sayHello("hello");
+        return hello;
     }
+
+//    @Bean
+//    public ApplicationRunner runner() {
+//        return args -> System.out.println(demoService.sayHello("message from consumer"));
+//    }
 
 }

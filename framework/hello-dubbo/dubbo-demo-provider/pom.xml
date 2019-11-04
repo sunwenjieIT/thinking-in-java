@@ -11,11 +11,6 @@
 
     <artifactId>dubbo-demo-provider</artifactId>
 
-    <properties>
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
-        <dubbo.version>2.7.3</dubbo.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>xyz.wenjiesx.framework</groupId>

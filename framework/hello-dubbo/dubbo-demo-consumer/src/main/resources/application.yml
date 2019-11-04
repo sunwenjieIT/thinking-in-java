@@ -1,6 +1,8 @@
-spring:
+dubbo:
   application:
     name: demo-consumer
+server:
+  port: 8082
 
 ---
 spring:
@@ -9,3 +11,5 @@ spring:
 dubbo:
   registry:
     address: zookeeper://127.0.0.1:2181
+  metadata-report:
+    address: redis://127.0.0.1:6379
