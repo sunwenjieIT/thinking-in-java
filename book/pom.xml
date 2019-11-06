@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>think-in-java</module>
+        <module>leetcode</module>
     </modules>
 
     <dependencies>
