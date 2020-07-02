@@ -12,5 +12,7 @@
     <groupId>xyz.wenjiesx.book</groupId>
     <artifactId>think-in-java</artifactId>
 
+    <dependencies>
+    </dependencies>
 
 </project>
