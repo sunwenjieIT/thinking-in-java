@@ -10,15 +10,16 @@ module menu
 
     ├── root
     │   ├── book
-    │   │   ├── leetcode
-    │   │   └── think-in-java
+    │   │   ├── leetcode //练习题
+    │   │   └── think-in-java 
     │   └── framework
-    │       ├── hello-dubbo
+    │       ├── hello-dubbo 
     │       │   ├── dubbo-demo-api
     │       │   ├── dubbo-demo-consumer
     │       │   └── dubbo-demo-provider
     │       ├── my-spring-boot-starter
     │       └── my-spring-boot-starter-verify
+    │   ├── java-spi-demo //关于java spi的示例代码
     
     
 // TODO completion module README file.
