@@ -11,6 +11,8 @@
     <modules>
         <module>book</module>
         <module>framework</module>
+        <module>java-spi-demo</module>
+<!--        <module>spi-demo-api</module>-->
     </modules>
     <!--<groupId>xyz.wenjiesx.book</groupId>
     <artifactId>thinking-in-java</artifactId>
