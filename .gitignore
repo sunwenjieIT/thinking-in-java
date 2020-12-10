@@ -1,3 +1,5 @@
 target/
 *.iml
 /.idea/
+/rpc-demo/.mvn/
+/rpc-demo/rpc-server2/.mvn/
