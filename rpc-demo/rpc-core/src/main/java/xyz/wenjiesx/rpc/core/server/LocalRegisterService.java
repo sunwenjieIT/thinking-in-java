@@ -1,4 +1,4 @@
-package xyz.wenjiesx.rpc.server2.core;
+package xyz.wenjiesx.rpc.core.server;
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2020/12/10
  */
 @Service
-public class RegisterService {
+public class LocalRegisterService {
 
     private static final Map<String, Object> serviceCache = new ConcurrentHashMap<>();
 

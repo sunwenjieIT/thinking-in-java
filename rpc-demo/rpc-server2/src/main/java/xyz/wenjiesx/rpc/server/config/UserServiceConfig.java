@@ -24,7 +24,7 @@ public class UserServiceConfig {
     @PostConstruct
     public void server() throws IOException {
         rpcServerFrame.startService(UserService.class.getName(),
-                "127.0.0.1", 9999, userService);
+                "127.0.0.1", 10001, userService);
     }
 
 }
