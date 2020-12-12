@@ -3,7 +3,7 @@ package xyz.wenjiesx.rpc.client.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import xyz.wenjiesx.rpc.client.core.RpcClientFrame;
+import xyz.wenjiesx.rpc.core.client.RpcClientFrame;
 import xyz.wenjiesx.rpc.server.api.UserService;
 
 /**

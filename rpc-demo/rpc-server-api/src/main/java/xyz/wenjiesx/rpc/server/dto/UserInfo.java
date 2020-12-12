@@ -38,6 +38,15 @@ public class UserInfo implements Serializable {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
 
 

@@ -1,4 +1,4 @@
-package xyz.wenjiesx.rpc.server2.impl;
+package xyz.wenjiesx.rpc.server.impl;
 
 import org.springframework.stereotype.Service;
 import xyz.wenjiesx.rpc.server.api.UserService;
@@ -16,8 +16,9 @@ public class UserServiceImpl implements UserService {
 
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(userId);
-        userInfo.setUsername("张三");
-        userInfo.setAge(10);
+        userInfo.setUsername("李四");
+        userInfo.setAge(11);
+        System.out.println(userInfo);
         return userInfo;
     }
 }

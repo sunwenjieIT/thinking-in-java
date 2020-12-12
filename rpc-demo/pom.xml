@@ -19,8 +19,13 @@
 
     <modules>
         <module>rpc-server-api</module>
-        <module>rpc-server2</module>
         <module>rpc-client</module>
+        <module>rpc-register-center</module>
+        <module>rpc-register-api</module>
+        <module>rpc-core</module>
+        <module>rpc-register-client-starter</module>
+        <module>rpc-server1</module>
+        <module>rpc-server2</module>
     </modules>
 
     <properties>
