@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.List;
 
 /**
+ * 注册中心的接口实现(客户端调用侧)
+ *
  * @author wenji
  * @date 2019/10/25
  */
@@ -24,118 +26,21 @@ public class RegisterServiceClientImpl implements RegisterService {
 
     @Override
     public void regService(String groupName, String host, int port) {
-        //登记到注册中心
-        Socket             socket = null;
-        ObjectOutputStream output = null;
-        ObjectInputStream  input  = null;
-
-        try {
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(properties.getHost(), Integer.parseInt(properties.getPort())));
-
-            output = new ObjectOutputStream(socket.getOutputStream());
-            /*注册服务*/
-            output.writeBoolean(false);
-            /*提供的服务名*/
-            output.writeUTF(groupName);
-            /*服务提供方的IP*/
-            output.writeUTF(host);
-            /*服务提供方的端口*/
-            output.writeInt(port);
-            output.flush();
-
-            input = new ObjectInputStream(socket.getInputStream());
-            if (input.readBoolean()) {
-                System.out.println("服务[" + groupName + "]注册成功!");
-            }
-
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        } finally {
-            try {
-
-                if (socket != null) socket.close();
-                if (output != null) output.close();
-                if (input != null) input.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-       /* Socket socket = null;
-        try {
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(properties.getHost(), Integer.parseInt(properties.getPort())));
-            try (
-                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-            ) {
-                outputStream.writeUTF("regService");
-                outputStream.writeObject(new Object[]{groupName, host, port});
-                outputStream.writeObject(new Class[]{String.class, String.class, int.class});
-
-                outputStream.flush();
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("IO ERROR", e);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
+        invoke("regService", new Object[]{groupName, host, port}, new Class[]{String.class, String.class, int.class});
     }
 
     @Override
     public List<InetSocketAddress> getService(String groupName) {
+        return (List<InetSocketAddress>) invoke("getService", new Object[]{groupName}, new Class[]{String.class});
+    }
 
-        Socket             socket = null;
-        ObjectOutputStream output = null;
-        ObjectInputStream  input  = null;
+    @Override
+    public void heartBeat(String groupName, String host, int port) {
+        System.out.println("服务: " + groupName + "#" + host + "#" + port + " 执行心跳保活");
+        invoke("heartBeat", new Object[]{groupName, host, port}, new Class[]{String.class, String.class, int.class});
+    }
 
-        try {
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(properties.getHost(), Integer.parseInt(properties.getPort())));
-
-            output = new ObjectOutputStream(socket.getOutputStream());
-            //需要获得服务提供者
-            output.writeBoolean(true);
-            //告诉注册中心服务名
-            output.writeUTF(groupName);
-            output.flush();
-
-            input = new ObjectInputStream(socket.getInputStream());
-            List<InetSocketAddress> result
-                    = (List<InetSocketAddress>) input.readObject();
-//            List<InetSocketAddress> services = new ArrayList<>();
-//            for(RegisterServiceVo serviceVo : result){
-//                String host = serviceVo.getHost();//获得服务提供者的IP
-//                int port = serviceVo.getPort();//获得服务提供者的端口号
-//                InetSocketAddress serviceAddr = new InetSocketAddress(host,port);
-//                services.add(serviceAddr);
-//            }
-            System.out.println("获得服务[" + groupName
-                    + "]提供者的地址列表[" + result + "]，准备调用.");
-            return result;
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        } finally {
-            try {
-
-                if (socket != null) socket.close();
-                if (output != null) output.close();
-                if (input != null) input.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-/*
+    protected Object invoke(String methodName, Object[] params, Class<?>[] paramTypes) {
 
         Socket socket = null;
         try {
@@ -145,14 +50,12 @@ public class RegisterServiceClientImpl implements RegisterService {
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream())
             ) {
-                outputStream.writeUTF("regService");
-                outputStream.writeObject(new Object[]{groupName});
-                outputStream.writeObject(new Class[]{String.class});
+                outputStream.writeUTF(methodName);
+                outputStream.writeObject(params);
+                outputStream.writeObject(paramTypes);
 
                 outputStream.flush();
-                List<InetSocketAddress> result = (List<InetSocketAddress>) inputStream.readObject();
-
-                return result;
+                return inputStream.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -165,8 +68,8 @@ public class RegisterServiceClientImpl implements RegisterService {
                     e.printStackTrace();
                 }
             }
-        }*/
-    }
+        }
 
+    }
 
 }

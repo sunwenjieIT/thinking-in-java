@@ -8,10 +8,11 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
 
 /**
  * @author wenji
@@ -37,6 +38,31 @@ public class RpcRegisterCenter {
         }
 
         @Override
+        public void run() {
+            try (ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
+
+                String methodName = inputStream.readUTF();
+                Object[] params = (Object[]) inputStream.readObject();
+                Class<?>[] paramTypes = (Class<?>[]) inputStream.readObject();
+
+                Method method = registerService.getClass().getMethod(methodName, paramTypes);
+                Object result = method.invoke(registerService, params);
+                outputStream.writeObject(result);
+                outputStream.flush();
+
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+
+/*        @Override
         public void run() {
             try (ObjectInputStream inputStream =
                          new ObjectInputStream(socket.getInputStream());
@@ -74,6 +100,7 @@ public class RpcRegisterCenter {
                 }
             }
         }
+        */
     }
 
     public void startService(int port) throws IOException {

@@ -25,28 +25,21 @@ public class RpcClientFrame {
     @Resource
     private RegisterService registerService;
 
-    public <T> T getRemoteProxyObject(Class<?> serviceInterface) throws Exception {
-        return getRemoteProxyObject(serviceInterface, null);
-    }
-
-    public <T> T getRemoteProxyObject(Class<?> serviceInterface, List<InetSocketAddress> addrList) {
-        if (addrList == null)
-            addrList = getService(serviceInterface.getName());
-
+    public <T> T getRemoteProxyObject(Class<?> serviceInterface) {
         return (T) Proxy.newProxyInstance(serviceInterface.getClassLoader(),
-                new Class<?>[]{serviceInterface}, new DynamicProxy(serviceInterface, addrList, serviceInterface.getName()));
+                new Class<?>[]{serviceInterface}, new DynamicProxy(serviceInterface, registerService, serviceInterface.getName()));
     }
 
     private static class DynamicProxy implements InvocationHandler {
 
-        private String serviceName;
-        private Class<?>                serviceInterface;
-        private List<InetSocketAddress> addrList;
+        private final String          serviceName;
+        private final Class<?>        serviceInterface;
+        private final RegisterService registerService;
 
-        public DynamicProxy(Class<?> serviceInterface, List<InetSocketAddress> addrList, String serviceName) {
+        public DynamicProxy(Class<?> serviceInterface, RegisterService registerService, String serviceName) {
             this.serviceInterface = serviceInterface;
-            this.addrList = addrList;
             this.serviceName = serviceName;
+            this.registerService = registerService;
         }
 
         @Override
@@ -80,6 +73,8 @@ public class RpcClientFrame {
         }
 
         public InetSocketAddress selectOneAddr() {
+            //直接从远端获取列表, TODO 这里可以做缓存让本地缓存远端列表, 避免每次拉取注册中心的服务列表
+            List<InetSocketAddress> addrList = registerService.getService(serviceName);
             //负载均衡简易实现 随机
             int    size     = addrList.size();
             Random random   = new Random();
@@ -89,19 +84,6 @@ public class RpcClientFrame {
             System.out.println("=======服务" + serviceName + "选择" + useIndex + "号实例请求, " + inetSocketAddress);
             return inetSocketAddress;
         }
-    }
-
-    private List<InetSocketAddress> getService(String serviceName) {
-
-        if (registerService == null)
-            throw new RuntimeException("register service is null");
-
-        List<InetSocketAddress> serviceAddrList = registerService.getService(serviceName);
-        return serviceAddrList;
-    }
-
-    private static InetSocketAddress getServiceAddress(String serviceName) {
-        return new InetSocketAddress("127.0.0.1", 9999);
     }
 
 }

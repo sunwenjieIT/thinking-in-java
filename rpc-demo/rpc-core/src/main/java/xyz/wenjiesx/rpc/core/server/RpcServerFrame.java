@@ -11,8 +11,7 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @author wenji
@@ -24,6 +23,14 @@ public class RpcServerFrame {
     private static final ExecutorService executorService =
             Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+    private final ScheduledThreadPoolExecutor heartBeatExecutor =
+            new ScheduledThreadPoolExecutor(Runtime.getRuntime().availableProcessors(), new ThreadFactory() {
+                @Override
+                public Thread newThread(Runnable r) {
+                    return new Thread(r, "schedule-heart-beat-executor");
+                }
+            });
+
     @Autowired
     private LocalRegisterService localRegisterService;
 
@@ -31,6 +38,26 @@ public class RpcServerFrame {
     private RegisterService registerService;
 
     private Integer port;
+
+    private static class HeatBeatTask implements Runnable {
+
+        private RegisterService registerService;
+        private String groupName;
+        private String host;
+        private int port;
+
+        public HeatBeatTask(RegisterService registerService, String groupName, String host, int port) {
+            this.registerService = registerService;
+            this.groupName = groupName;
+            this.host = host;
+            this.port = port;
+        }
+
+        @Override
+        public void run() {
+            registerService.heartBeat(groupName, host, port);
+        }
+    }
 
     private static class ServerTask implements Runnable {
 
@@ -91,6 +118,8 @@ public class RpcServerFrame {
         System.out.println("server " + name + " reg in remote success");
         registerService.regService(name, host, port);
         System.out.println("rpc server started on port:" + port);
+        heartBeatExecutor.scheduleWithFixedDelay(new HeatBeatTask(registerService, name, host, port),
+                3, 3, TimeUnit.SECONDS);
         try {
             while (true) {
                 executorService.execute(new ServerTask(serverSocket.accept(), localRegisterService));
