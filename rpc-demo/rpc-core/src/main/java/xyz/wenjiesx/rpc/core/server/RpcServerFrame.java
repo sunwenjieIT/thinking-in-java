@@ -24,12 +24,7 @@ public class RpcServerFrame {
             Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     private final ScheduledThreadPoolExecutor heartBeatExecutor =
-            new ScheduledThreadPoolExecutor(Runtime.getRuntime().availableProcessors(), new ThreadFactory() {
-                @Override
-                public Thread newThread(Runnable r) {
-                    return new Thread(r, "schedule-heart-beat-executor");
-                }
-            });
+            new ScheduledThreadPoolExecutor(Runtime.getRuntime().availableProcessors(), r -> new Thread(r, "schedule-heart-beat-executor"));
 
     @Autowired
     private LocalRegisterService localRegisterService;
@@ -37,14 +32,12 @@ public class RpcServerFrame {
     @Autowired
     private RegisterService registerService;
 
-    private Integer port;
-
     private static class HeatBeatTask implements Runnable {
 
         private RegisterService registerService;
-        private String groupName;
-        private String host;
-        private int port;
+        private String          groupName;
+        private String          host;
+        private int             port;
 
         public HeatBeatTask(RegisterService registerService, String groupName, String host, int port) {
             this.registerService = registerService;

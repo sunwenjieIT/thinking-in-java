@@ -27,12 +27,7 @@ public class RegisterServiceServerImpl implements RegisterService {
 
     private final Map<String, Long> instanceConnectMap = new ConcurrentHashMap<>();
 
-    private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, new ThreadFactory() {
-        @Override
-        public Thread newThread(Runnable r) {
-            return new Thread(r, "schedule-refresh-service-cache");
-        }
-    });
+    private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, r -> new Thread(r, "schedule-refresh-service-cache"));
 
     public RegisterServiceServerImpl() {
         System.out.println("======开启延时检查服务==============");
