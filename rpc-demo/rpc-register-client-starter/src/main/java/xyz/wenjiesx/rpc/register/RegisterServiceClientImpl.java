@@ -59,7 +59,7 @@ public class RegisterServiceClientImpl implements RegisterService {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            return null;
         } finally {
             if (socket != null) {
                 try {

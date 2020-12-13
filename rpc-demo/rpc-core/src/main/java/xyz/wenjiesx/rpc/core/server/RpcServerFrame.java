@@ -55,7 +55,11 @@ public class RpcServerFrame {
 
         @Override
         public void run() {
-            registerService.heartBeat(groupName, host, port);
+            try {
+                registerService.heartBeat(groupName, host, port);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
