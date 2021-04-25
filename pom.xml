@@ -13,6 +13,7 @@
         <module>framework</module>
         <module>java-spi-demo</module>
         <module>rpc-demo</module>
+        <module>basic</module>
         <!--        <module>spi-demo-api</module>-->
     </modules>
     <!--<groupId>xyz.wenjiesx.book</groupId>
