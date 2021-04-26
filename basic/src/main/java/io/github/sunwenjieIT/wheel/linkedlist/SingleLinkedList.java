@@ -9,13 +9,12 @@ package io.github.sunwenjieIT.wheel.linkedlist;
  */
 public class SingleLinkedList<T> {
 
-    int capacity;
+    int  size;
+    Node head;
 
-    Node<T> first;
-
-    public static class Node<T> {
-        T       data;
-        Node<T> next;
+    class Node {
+        T    data;
+        Node next;
 
         public Node(T data) {
             this.data = data;
@@ -23,63 +22,118 @@ public class SingleLinkedList<T> {
     }
 
     public SingleLinkedList() {
-        this.capacity = 0;
+        this.size = 0;
     }
 
     /**
      * 反转元素 头 -> 尾 尾 -> 头
      */
     public void convertNodes() {
-        if (capacity <= 1)
+        if (size <= 1)
             return;
 
-        Node<T> t, l = null, r = first;
-        for (int i = 0; i < capacity - 1; i++) {
+        Node t, l = null, r = head;
+        for (int i = 0; i < size - 1; i++) {
             t = r.next;
             r.next = l;
             l = r;
             r = t;
         }
         r.next = l;
-        first = r;
+        head = r;
     }
 
+    public T removeLast() {
+        if (head == null) return null;
+        Node cur = head;
+        Node pre = head;
+
+        while (cur.next != null) {
+            pre = cur;
+            cur = cur.next;
+        }
+
+        pre.next = null;
+        size--;
+        return cur.data;
+    }
+
+    /**
+     * 指定坐标插入
+     *
+     * @param position
+     * @param target
+     */
     public void add(int position, T target) {
-        if (position > capacity) {
-            throw new RuntimeException("out of index, " + position + ", capacity: " + capacity);
+        checkPosition(position);
+
+        Node node = new Node(target);
+        if (head == null) {
+            head = node;
+            size++;
+            return;
         }
 
-        Node<T> node = new Node<>(target);
-        if (position == 0) {
-            node.next = first;
-            first = node;
-        } else {
-            Node<T> tmp = first;
-            for (int i = 1; i < position; i++) {
-                tmp = tmp.next;
-            }
-            if (tmp.next != null)
-                node.next = tmp.next;
-
-            tmp.next = node;
+        Node pre = head, cur = head;
+        for (int i = 0; i < position; i++) {
+            pre = cur;
+            cur = cur.next;
         }
-        capacity++;
+
+        node.next = cur;
+        pre.next = node;
+
+        size++;
     }
 
+    /**
+     * 尾插
+     * @param target
+     */
+    public void addLast(T target) {
+        add(size, target);
+    }
+
+    /**
+     * 头插
+     * @param target
+     */
     public void add(T target) {
-        add(capacity, target);
+        Node cur = head;
+        Node node = new Node(target);
+        node.next = cur;
+        head = node;
+        size++;
     }
+
 
     public T get(int position) {
-        if (position > capacity - 1) {
-            throw new RuntimeException("out of index, " + position + ", capacity: " + capacity);
-        }
-        Node<T> tmp = first;
+        checkPosition(position);
+
+        Node cur = head;
         for (int i = 1; i <= position; i++) {
-            tmp = tmp.next;
+            cur = cur.next;
         }
 
-        return tmp.data;
+        return cur.data;
+    }
+
+    @Override
+    public String toString() {
+
+        Node cur = head;
+        StringBuilder sb = new StringBuilder("[");
+        while (cur != null) {
+            sb.append(cur.data).append(" ");
+            cur = cur.next;
+        }
+        return sb.append("]").toString();
+    }
+
+    protected void checkPosition(int position) {
+        if (position > size) {
+            throw new IndexOutOfBoundsException("index, " + position + ", size: " + size);
+        }
     }
 
     public static void main(String[] args) {
@@ -91,14 +145,14 @@ public class SingleLinkedList<T> {
         list.add(5);
         list.add(3, 10);
 
-        for (int i = 0; i < list.capacity; i++) {
-            System.out.println(list.get(i));
-        }
+        System.out.println(list);
 
         list.convertNodes();
         System.out.println("convert nodes");
-        for (int i = 0; i < list.capacity; i++) {
-            System.out.println(list.get(i));
-        }
+        System.out.println(list);
+        System.out.println(list.get(2));
+        System.out.println(list.removeLast());
+        System.out.println(list);
     }
+
 }
