@@ -17,6 +17,7 @@
         <module>my-spring-boot-starter-verify</module>
         <module>hello-dubbo</module>
         <module>fake-spring-boot-starter</module>
+        <module>simple-spring-framework</module>
     </modules>
 
 
