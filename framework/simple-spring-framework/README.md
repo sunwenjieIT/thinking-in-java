@@ -10,10 +10,8 @@
 * ApplicationContextAware和BeanNameAware
 * 基于代理实现的transactional
 
-
 ## 验证
-
-
+````
 ├── com.wenjie
 │   ├── bean
 │       ├── TestApplication.java //验证入口启动类
@@ -23,3 +21,4 @@
 │           ├── OrderService.java //验证用服务
 │           └── UserService.java //验证用服务
 │   └── springframework //模拟框架代码包
+````
